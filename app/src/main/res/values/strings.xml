@@ -4,5 +4,9 @@
     <string name="app_name">PayBack</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="type_of_transaction">
+        <item>One Time</item>
+        <item>Subscription</item>
+    </string-array>
 
 </resources>
