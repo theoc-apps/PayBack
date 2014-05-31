@@ -10,9 +10,10 @@
     </string-array>
     <string-array name="full_split_amount">
         <item>Full Amount</item>
-        <item>Split Amount</item>
+        <item>Split by $</item>
+        <item>Split by %</item>
     </string-array>
-    <string name="amount">Amount: </string>
+    <string name="amount">Amount: $</string>
     <string name="edit_amount_hint">Total</string>
 
 </resources>
