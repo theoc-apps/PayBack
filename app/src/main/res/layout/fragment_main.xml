@@ -8,9 +8,18 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.zeroinbit.payback.app.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/type_of_transaction"
+                android:visibility="visible"/>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
