@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends Activity {
     //test2
@@ -48,7 +54,9 @@ public class MainActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements TextView.OnEditorActionListener{
+
+        private EditText amount_total;
 
         public PlaceholderFragment() {
         }
@@ -57,7 +65,17 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            // Setting up EditText for search
+            amount_total = (EditText) rootView.findViewById(R.id.amount_total);
+            amount_total.setOnEditorActionListener(this);
+
             return rootView;
+        }
+
+        @Override
+        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+            Toast.makeText(getActivity().getBaseContext(), amount_total.getText().toString(), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 }

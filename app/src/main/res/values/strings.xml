@@ -13,7 +13,10 @@
         <item>Split by $</item>
         <item>Split by %</item>
     </string-array>
-    <string name="amount">Amount: $</string>
+    <string name="amount">Amount:</string>
     <string name="edit_amount_hint">Total</string>
+    <string name="split_number_of_people">Split by:</string>
+    <string name="split_number_of_people_hint"># of people</string>
+    <string name="dollar_sign">$</string>
 
 </resources>
