@@ -13,12 +13,39 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Spinner
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/type_of_transaction"
-                android:visibility="visible"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/type_of_transaction"
+                    android:visibility="visible"
+                    android:layout_weight="1"/>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/full_split_amount"
+                    android:visibility="visible"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount"/>
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_amount_hint"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
