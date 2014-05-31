@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 public class MainActivity extends Activity {
-
+    //test2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
