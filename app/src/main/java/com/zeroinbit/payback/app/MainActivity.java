@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity {
 
-    private static double payable;
+    private double payable;
 
     private static PayPalConfiguration config = new PayPalConfiguration()
 
@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
             .clientId("AWUYeRC5S56Ao-JQ1RibakSW7R0AccsqERnZ_trh61Ja2XQHvkfNXc10UM6l");
 
 
-    public static void setPayable(double stuff) {
-        payable = stuff;
+    public void setPayable(double payable) {
+        this.payable = payable;
     }
 
     @Override
@@ -96,16 +96,15 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
-    public static void onBuyPressed(View pressed) {
+    public void onBuyPressed(View pressed) {
         // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
         // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
         // capture funds later.
 
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(payable), "USD", "hipster jeans",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
-        MainActivity temp = new MainActivity();
-        Intent intent = new Intent(temp, PaymentActivity.class);
+        Intent intent = new Intent(this, PaymentActivity.class);
 
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
 
