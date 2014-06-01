@@ -32,6 +32,8 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity {
 
+    private static double payable;
+
     private static PayPalConfiguration config = new PayPalConfiguration()
 
             // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
@@ -39,6 +41,11 @@ public class MainActivity extends Activity {
             .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
 
             .clientId("AWUYeRC5S56Ao-JQ1RibakSW7R0AccsqERnZ_trh61Ja2XQHvkfNXc10UM6l");
+
+
+    public static void setPayable(double stuff) {
+        payable = stuff;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +96,16 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
-    public void onBuyPressed(View pressed) {
+    public static void onBuyPressed(View pressed) {
         // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
         // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
         // capture funds later.
 
-        PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(payable), "USD", "hipster jeans",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
-        Intent intent = new Intent(this, PaymentActivity.class);
+        MainActivity temp = new MainActivity();
+        Intent intent = new Intent(temp, PaymentActivity.class);
 
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
 
@@ -134,10 +142,10 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment{
 
-        private EditText amount_totalInt;
-        private EditText split_byInt;
-        private Spinner type_of_transactionString;
-        private Spinner split_amount;
+        private static EditText amount_total;
+        private static EditText split_by;
+        private static Spinner type_of_transaction;
+        private static Spinner split_amount;
 
 
 
@@ -146,19 +154,19 @@ public class MainActivity extends Activity {
         public PlaceholderFragment() {
         }
 
-        public EditText getAmount_totalInt() {
-            return amount_totalInt;
+        public static EditText getAmount_total() {
+            return amount_total;
         }
 
-        public EditText getSplit_byInt() {
-            return split_byInt;
+        public static EditText getSplit_by() {
+            return split_by;
         }
 
-        public Spinner getType_of_transactionString() {
-            return type_of_transactionString;
+        public static Spinner getType_of_transaction() {
+            return type_of_transaction;
         }
 
-        public Spinner getSplit_amount() {
+        public static Spinner getSplit_amount() {
             return split_amount;
         }
 

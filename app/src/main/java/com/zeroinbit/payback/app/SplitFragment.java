@@ -21,6 +21,12 @@ public class SplitFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_split, container, false);
 
+        getDialog().setTitle("Spliting The Bill");
+        if (MainActivity.PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Full Amount")){
+            MainActivity.setPayable(Double.parseDouble(MainActivity.PlaceholderFragment.getAmount_total().getText().toString()));
+            MainActivity.onBuyPressed(rootView);
+        }
+
         return rootView;
     }
 
