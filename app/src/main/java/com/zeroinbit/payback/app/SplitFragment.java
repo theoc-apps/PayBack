@@ -9,8 +9,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
+import android.widget.Spinner;
 
 
 public class SplitFragment extends DialogFragment {
@@ -22,7 +21,9 @@ public class SplitFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_split, container, false);
 
         getDialog().setTitle("Spliting The Bill");
-
+        //Spinner type_of_transaction;
+        //Spinner split_amount;
+        System.out.println("Amount: " + MainActivity.PlaceholderFragment.getAmount_total().getText().toString());
 
         return rootView;
     }

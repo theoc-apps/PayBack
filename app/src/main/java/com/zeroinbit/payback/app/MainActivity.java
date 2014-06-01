@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
         // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
         // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
         // capture funds later.
-
+        System.out.println("Amount: " + PlaceholderFragment.getAmount_total().getText().toString());
         PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
@@ -174,10 +174,10 @@ public class MainActivity extends Activity {
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             // Setting up EditText for search
-            EditText amount_total = (EditText) rootView.findViewById(R.id.amount_total);
-            EditText split_by = (EditText) rootView.findViewById(R.id.split_by);
-            Spinner type_of_transaction = (Spinner)rootView.findViewById(R.id.type_of_transaction);
-            Spinner split_amount = (Spinner)rootView.findViewById(R.id.split_amount);
+            amount_total = (EditText) rootView.findViewById(R.id.amount_total);
+            split_by = (EditText) rootView.findViewById(R.id.split_by);
+            type_of_transaction = (Spinner)rootView.findViewById(R.id.type_of_transaction);
+            split_amount = (Spinner)rootView.findViewById(R.id.split_amount);
 
 
             return rootView;
