@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity {
 
-    private double payable;
+    private double payable = 11;
 
     private static PayPalConfiguration config = new PayPalConfiguration()
 
@@ -64,15 +64,24 @@ public class MainActivity extends Activity {
     }
 
     public void split(View view){
-        FragmentManager fm = getFragmentManager();
-        SplitFragment split = new SplitFragment();
-        split.show(fm, "fragment_info");
+
+        if (PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Full Amount")) {
+            this.payable = Double.parseDouble(PlaceholderFragment.getAmount_total().getText().toString());
+        }
+
+        if (PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Split by $"))
+            this.payable = Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString());
+
+        if (PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Split by %"))
+            this.payable =
+                    Double.parseDouble(PlaceholderFragment.getAmount_total().getText().toString())
+                            * (Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString()) / 100);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -100,8 +109,8 @@ public class MainActivity extends Activity {
         // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
         // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
         // capture funds later.
-        System.out.println("Amount: " + PlaceholderFragment.getAmount_total().getText().toString());
-        PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
+
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(this.payable), "CA", "Amount Due",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(this, PaymentActivity.class);
@@ -145,9 +154,6 @@ public class MainActivity extends Activity {
         private static EditText split_by;
         private static Spinner type_of_transaction;
         private static Spinner split_amount;
-
-
-
 
 
         public PlaceholderFragment() {
