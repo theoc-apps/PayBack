@@ -4,6 +4,7 @@
     <string name="app_name">PayBack</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
     <string-array name="type_of_transaction">
         <item>One Time</item>
         <item>Subscription</item>
@@ -13,10 +14,13 @@
         <item>Split by $</item>
         <item>Split by %</item>
     </string-array>
+
     <string name="amount">Amount:</string>
     <string name="edit_amount_hint">Total</string>
     <string name="split_number_of_people">Split by:</string>
     <string name="split_number_of_people_hint"># of people</string>
     <string name="dollar_sign">$</string>
+    <string name="button_calculate">Split</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

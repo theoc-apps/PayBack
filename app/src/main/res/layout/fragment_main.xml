@@ -21,12 +21,14 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal">
                 <Spinner
+                    android:id="@+id/type_of_transaction"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/type_of_transaction"
                     android:visibility="visible"
                     android:layout_weight="1"/>
                 <Spinner
+                    android:id="@+id/split_amount"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/full_split_amount"
@@ -80,6 +82,7 @@
                         android:text="@string/split_number_of_people"
                         android:textStyle="bold"/>
                     <EditText
+                        android:id="@+id/split_by"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -87,6 +90,16 @@
                         android:hint="@string/split_number_of_people_hint"/>
                 </LinearLayout>
             </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_calculate"
+                android:onClick="split"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy"
+                android:onClick="onBuyPressed"/>
         </LinearLayout>
     </ScrollView>
 

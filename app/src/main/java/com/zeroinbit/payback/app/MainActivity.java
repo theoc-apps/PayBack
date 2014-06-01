@@ -3,7 +3,10 @@ package com.zeroinbit.payback.app;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,13 +15,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
+
 public class MainActivity extends Activity {
-    //test2
+
+    private static PayPalConfiguration config = new PayPalConfiguration()
+
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+
+            .clientId("AWUYeRC5S56Ao-JQ1RibakSW7R0AccsqERnZ_trh61Ja2XQHvkfNXc10UM6l");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +49,17 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        Intent intent = new Intent(this, PayPalService.class);
+
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        startService(intent);
+    }
+
+    public void split(View view){
+        FragmentManager fm = getFragmentManager();
+        SplitFragment split = new SplitFragment();
+        split.show(fm, "fragment_info");
     }
 
 
@@ -51,14 +83,83 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    public void onBuyPressed(View pressed) {
+        // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
+        // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
+        // capture funds later.
+
+        PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            if (confirm != null) {
+                try {
+                    Log.i("paymentExample", confirm.toJSONObject().toString(4));
+
+                    // TODO: send 'confirm' to your server for verification.
+                    // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
+                    // for more details.
+
+                } catch (JSONException e) {
+                    Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                }
+            }
+        }
+        else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i("paymentExample", "The user canceled.");
+        }
+        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+            Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+        }
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements TextView.OnEditorActionListener{
+    public static class PlaceholderFragment extends Fragment{
 
-        private EditText amount_total;
+        private EditText amount_totalInt;
+        private EditText split_byInt;
+        private Spinner type_of_transactionString;
+        private Spinner split_amount;
+
+
+
+
 
         public PlaceholderFragment() {
+        }
+
+        public EditText getAmount_totalInt() {
+            return amount_totalInt;
+        }
+
+        public EditText getSplit_byInt() {
+            return split_byInt;
+        }
+
+        public Spinner getType_of_transactionString() {
+            return type_of_transactionString;
+        }
+
+        public Spinner getSplit_amount() {
+            return split_amount;
         }
 
         @Override
@@ -66,16 +167,17 @@ public class MainActivity extends Activity {
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             // Setting up EditText for search
-            amount_total = (EditText) rootView.findViewById(R.id.amount_total);
-            amount_total.setOnEditorActionListener(this);
+            EditText amount_total = (EditText) rootView.findViewById(R.id.amount_total);
+            EditText split_by = (EditText) rootView.findViewById(R.id.split_by);
+            Spinner type_of_transaction = (Spinner)rootView.findViewById(R.id.type_of_transaction);
+            Spinner split_amount = (Spinner)rootView.findViewById(R.id.split_amount);
+
 
             return rootView;
         }
 
-        @Override
-        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-            Toast.makeText(getActivity().getBaseContext(), amount_total.getText().toString(), Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
+
+
     }
 }
