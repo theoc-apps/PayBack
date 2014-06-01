@@ -70,12 +70,13 @@ public class MainActivity extends Activity {
         }
 
         if (PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Split by $"))
-            this.payable = Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString());
+            this.payable =  Double.parseDouble(PlaceholderFragment.getAmount_total().getText().toString()) /
+                    Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString());
 
         if (PlaceholderFragment.getSplit_amount().getSelectedItem().toString().equals("Split by %"))
             this.payable =
                     Double.parseDouble(PlaceholderFragment.getAmount_total().getText().toString())
-                            * (Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString()) / 100);
+                            * ((Double.parseDouble(PlaceholderFragment.getSplit_by().getText().toString()) / 100));
     }
 
 
@@ -110,7 +111,7 @@ public class MainActivity extends Activity {
         // Change PAYMENT_INTENT_SALE to PAYMENT_INTENT_AUTHORIZE to only authorize payment and
         // capture funds later.
 
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(this.payable), "CA", "Amount Due",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(this.payable), "CAD", "Amount Due",
                 PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(this, PaymentActivity.class);
